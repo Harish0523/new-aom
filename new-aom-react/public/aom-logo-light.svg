@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 112" role="img" aria-labelledby="title">
+  <title id="title">NEW AOM</title>
+  <defs>
+    <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#e5c980"/>
+      <stop offset="1" stop-color="#b68735"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="104" height="104" rx="34" fill="#1b3d50" stroke="url(#gold)" stroke-width="2"/>
+  <circle cx="56" cy="56" r="39" fill="none" stroke="url(#gold)" stroke-width="2" opacity=".85"/>
+  <path d="M56 87c-19-7-30-19-32-34 14 1 25 7 32 20 7-13 18-19 32-20-2 15-13 27-32 34Z" fill="none" stroke="#e5c980" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M56 79V45M56 62 39 46M56 62 73 46" fill="none" stroke="#e5c980" stroke-width="2" stroke-linecap="round"/>
+  <text x="56" y="48" fill="#f9f1dc" font-family="Georgia, serif" font-size="24" text-anchor="middle">&#x0950;</text>
+  <text x="130" y="50" fill="#f9f1dc" font-family="Georgia, serif" font-size="35" font-weight="700" letter-spacing="2">NEW</text>
+  <text x="130" y="84" fill="url(#gold)" font-family="Georgia, serif" font-size="35" font-weight="700" letter-spacing="2">AOM</text>
+  <path d="M229 74h184" stroke="#c4a15b" stroke-width="1" opacity=".55"/>
+</svg>
