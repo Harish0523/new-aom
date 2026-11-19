@@ -12,6 +12,7 @@ import { API_BASE, resolveMediaUrl } from '../lib/api';
 import { useCmsCollection } from '../hooks/useCmsCollection';
 import { useLanguage } from '../context/LanguageContext';
 import CmsLink from '../components/CmsLink';
+import LazyVideo from '../components/LazyVideo';
 import RecaptchaField from '../components/RecaptchaField';
 import { DONATION_CURRENCIES, formatDonationAmount } from '../lib/currency';
 
@@ -203,7 +204,7 @@ export function InnerPageView({ slug }) {
                     <p className="small text-muted">{srv.shortDesc}</p>
                   </div>
                   <div className="d-flex gap-2 mt-3">
-                    <Link to={`/services/${srv.id}`} className="btn btn-sm btn-outline-dark">{t('learnMore')}</Link>
+                    <Link to={`/services/${srv.id}`} className="btn btn-sm btn-outline-dark" aria-label={`${srv.title} — ${t('learnMore')}`}>{t('learnMore')}<span className="visually-hidden">: {srv.title}</span></Link>
                     <Link to="/booking" className="btn btn-sm btn-gold">{t('bookNow')}</Link>
                   </div>
                 </div>
@@ -416,20 +417,16 @@ export function InnerPageView({ slug }) {
                 >
                   <div className="py-2 bg-light rounded-3 mb-3 d-flex align-items-center justify-content-center" style={{ minHeight: '180px', overflow: 'hidden' }}>
                     {item.mediaUrl && item.type === 'video' ? (
-                      <video
+                      <LazyVideo
                         className="img-fluid rounded-3 w-100"
                         controls
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        preload="metadata"
                         poster={item.poster ? resolveMediaUrl(item.poster) : undefined}
                         src={resolveMediaUrl(item.mediaUrl)}
+                        label={item.title}
                         style={{ maxHeight: '200px', objectFit: 'cover' }}
                       >
                         {t('browserVideoFallback')}
-                      </video>
+                      </LazyVideo>
                     ) : item.mediaUrl ? (
                       <img
                         className="img-fluid rounded-3 w-100"

@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Collapse } from 'bootstrap';
+import Collapse from 'bootstrap/js/dist/collapse';
 import { useLanguage, LANGUAGES } from '../context/LanguageContext';
 import { useCmsCollection } from '../hooks/useCmsCollection';
 import { resolveMediaUrl } from '../lib/api';
@@ -69,7 +69,7 @@ export default function Navbar() {
           <Link className="navbar-brand fw-bold fs-4" to="/">
             {settings.logoUrl
               ? <img src={resolveMediaUrl(settings.logoUrl)} alt={settings.siteTitle || 'NEW AOM'} style={{ maxHeight: '42px', maxWidth: '180px' }} />
-              : <img className="site-logo" src="/aom-logo.svg" alt={settings.siteTitle || 'NEW AOM'} />}
+              : <img className="site-logo" src={`${import.meta.env.BASE_URL}aom-logo.svg`} alt={settings.siteTitle || 'NEW AOM'} width="440" height="112" />}
           </Link>
 
           <button

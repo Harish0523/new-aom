@@ -11,6 +11,7 @@ import { useLanguage } from '../context/LanguageContext';
 import DonationOtpModal from './DonationOtpModal';
 import ContactForm from './ContactForm';
 import CmsLink from './CmsLink';
+import LazyVideo from './LazyVideo';
 import { resolveMediaUrl } from '../lib/api';
 import { useCmsCollection } from '../hooks/useCmsCollection';
 import { DONATION_CURRENCIES, formatDonationAmount } from '../lib/currency';
@@ -111,7 +112,7 @@ export default function HomeSections() {
             </div>
             <div className="col-lg-5">
               <div className="hero-art" aria-hidden="true">
-                <img className="hero-image" src={localizedHero && hero.imageUrl ? resolveMediaUrl(hero.imageUrl) : '/images/meditation-hero.jpg'} alt="" />
+                <img className="hero-image" src={localizedHero && hero.imageUrl ? resolveMediaUrl(hero.imageUrl) : `${import.meta.env.BASE_URL}images/meditation-hero.webp`} alt="" fetchpriority="high" loading="eager" />
                 <div className="hero-image-overlay" />
                 <div className="hero-art-halo" />
                 <div className="hero-art-orbit hero-art-orbit-outer" />
@@ -148,7 +149,7 @@ export default function HomeSections() {
               </p>
             </div>
             {promoAdIsLocalized && promoAd?.linkUrl ? (
-              <a href={promoAd.linkUrl} className="btn btn-gold flex-shrink-0">{t('learnMore')} <i className="bi bi-arrow-right ms-2" aria-hidden="true" /></a>
+              <a href={promoAd.linkUrl} className="btn btn-gold flex-shrink-0" aria-label={promoAd.title ? `${t('learnMore')}: ${promoAd.title}` : undefined}>{t('learnMore')} <span className="visually-hidden">: {promoAd.title || t('upcomingGathering')}</span> <i className="bi bi-arrow-right ms-2" aria-hidden="true" /></a>
             ) : events[0] ? (
               <Link to={`/events/${events[0].id}`} className="btn btn-gold flex-shrink-0">
                 {t('exploreEvent')} <i className="bi bi-arrow-right ms-2" aria-hidden="true" />
@@ -185,7 +186,7 @@ export default function HomeSections() {
                 </div>
               </div>
             </div>
-            <Link to="/about" className="btn btn-outline-dark btn-sm mt-3">{t('readMore')}</Link>
+            <Link to="/about" className="btn btn-outline-dark btn-sm mt-3" aria-label={`${t('readMore')}: ${t('navAbout')}`}>{t('readMore')}<span className="visually-hidden">: {t('navAbout')}</span></Link>
           </div>
           {homepageAdIsLocalized && homepageAd?.imageUrl && (
             <CmsLink to={homepageAd.linkUrl || '/'} className="d-block mt-4">
@@ -221,8 +222,8 @@ export default function HomeSections() {
                     <h3 className="h5 mt-2">{srv.title}</h3>
                     <p className="small text-muted">{srv.shortDesc}</p>
                   </div>
-                  <Link to={`/services/${srv.id}`} className="service-link align-self-start">
-                    {t('learnMore')} <i className="bi bi-arrow-up-right ms-1" aria-hidden="true" />
+                  <Link to={`/services/${srv.id}`} className="service-link align-self-start" aria-label={`${srv.title} — ${t('learnMore')}`}>
+                    {t('learnMore')}<span className="visually-hidden">: {srv.title}</span> <i className="bi bi-arrow-up-right ms-1" aria-hidden="true" />
                   </Link>
                 </div>
               </div>
@@ -278,8 +279,8 @@ export default function HomeSections() {
                     <h3 className="h6 fw-bold">{art.title}</h3>
                     <p className="small text-muted">{art.summary}</p>
                   </div>
-                  <Link to={`/articles/${art.id}`} className="btn btn-sm btn-outline-dark align-self-start">
-                    {t('readMore')}
+                  <Link to={`/articles/${art.id}`} className="btn btn-sm btn-outline-dark align-self-start" aria-label={`${art.title} — ${t('readMore')}`}>
+                    {t('readMore')}<span className="visually-hidden">: {art.title}</span>
                   </Link>
                 </div>
               </div>
@@ -335,7 +336,7 @@ export default function HomeSections() {
                   <div className="gallery-art">
                     {item.mediaUrl ? (
                       item.type === 'video'
-                        ? <video src={resolveMediaUrl(item.mediaUrl)} poster={item.poster ? resolveMediaUrl(item.poster) : undefined} aria-label={item.title} autoPlay muted loop playsInline preload="metadata" />
+                        ? <LazyVideo src={resolveMediaUrl(item.mediaUrl)} poster={item.poster ? resolveMediaUrl(item.poster) : undefined} label={item.title} />
                         : <img src={resolveMediaUrl(item.mediaUrl)} alt={item.title} loading="lazy" />
                     ) : <i className={`bi ${item.icon || 'bi-image'}`} aria-hidden="true" />}
                     <span>{item.type === 'video' ? t('watch') : t('explore')}</span>
@@ -617,8 +618,8 @@ export default function HomeSections() {
               <p className="text-muted mb-0">{closingAdIsLocalized ? (closingAd?.body || t('explorePerspectives')) : t('explorePerspectives')}</p>
             </div>
             {closingAdIsLocalized && closingAd?.linkUrl
-              ? <a href={closingAd.linkUrl} className="btn btn-outline-dark btn-sm">{closingAd.button_label || t('learnMore')}</a>
-              : <Link to="/knowledge-centre" className="btn btn-outline-dark btn-sm">{t('learnMore')}</Link>}
+              ? <a href={closingAd.linkUrl} className="btn btn-outline-dark btn-sm" aria-label={`${closingAd.button_label || t('learnMore')}: ${closingAd.title || t('wisdomShared')}`}>{closingAd.button_label || t('learnMore')}<span className="visually-hidden">: {closingAd.title || t('wisdomShared')}</span></a>
+              : <Link to="/knowledge-centre" className="btn btn-outline-dark btn-sm" aria-label={`${t('learnMore')}: ${t('navKnowledge')}`}>{t('learnMore')}<span className="visually-hidden">: {t('navKnowledge')}</span></Link>}
           </div>
         </div>
       </section>

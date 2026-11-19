@@ -17,7 +17,7 @@ export default function Footer() {
             <Link to="/" className="footer-logo-link d-inline-block mb-3" aria-label={settings.siteTitle || 'NEW AOM'}>
               {settings.logoUrl
                 ? <img className="footer-logo" src={resolveMediaUrl(settings.logoUrl)} alt={settings.siteTitle || 'NEW AOM'} />
-                : <img className="footer-logo" src="/aom-logo-light.svg" alt={settings.siteTitle || 'NEW AOM'} />}
+                : <img className="footer-logo" src={`${import.meta.env.BASE_URL}aom-logo-light.svg`} alt={settings.siteTitle || 'NEW AOM'} width="440" height="112" />}
             </Link>
             <p className="small text-white-50">
               {settings.siteDescription || t('siteSummary')}

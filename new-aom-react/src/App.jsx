@@ -1,12 +1,18 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { LanguageProvider } from './context/LanguageContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomeSections from './components/HomeSections';
-import { InnerPageView, NotFoundPage } from './pages/InnerPages';
 import { API_BASE } from './lib/api';
 import { useCmsCollection } from './hooks/useCmsCollection';
+
+const InnerPageView = lazy(() =>
+  import('./pages/InnerPages').then((module) => ({ default: module.InnerPageView }))
+);
+const NotFoundPage = lazy(() =>
+  import('./pages/InnerPages').then((module) => ({ default: module.NotFoundPage }))
+);
 
 function ScrollToTop() {
   const location = useLocation();
@@ -93,13 +99,14 @@ function TrackVisit() {
 export default function App() {
   return (
     <LanguageProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <ScrollToTop />
         <TrackVisit />
         <Navbar />
         <DocumentMeta />
         <main>
-          <Routes>
+          <Suspense fallback={null}>
+            <Routes>
             <Route path="/" element={<HomeSections />} />
             <Route path="/about" element={<InnerPageView slug="about" />} />
             <Route path="/services" element={<InnerPageView slug="services" />} />
@@ -118,7 +125,8 @@ export default function App() {
             <Route path="/privacy-policy" element={<InnerPageView slug="privacy-policy" />} />
             <Route path="/terms" element={<InnerPageView slug="terms" />} />
             <Route path="*" element={<NotFoundPage />} />
-          </Routes>
+            </Routes>
+          </Suspense>
         </main>
         <Footer />
       </BrowserRouter>

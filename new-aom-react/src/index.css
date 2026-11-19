@@ -12,6 +12,25 @@
   --font-body: 'Plus Jakarta Sans', 'Noto Sans Tamil', 'Noto Sans SC', sans-serif;
 }
 
+/* Latin subsets self-hosted so the hero renders without a Google Fonts round-trip. */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  src: url('/fonts/cormorant-garamond-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/plus-jakarta-sans-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -254,7 +273,7 @@ section[id] {
   background:
     linear-gradient(90deg, rgba(10, 35, 50, 0.96) 0%, rgba(16, 43, 63, 0.91) 44%, rgba(16, 43, 63, 0.73) 100%),
     radial-gradient(ellipse at 82% 18%, rgba(196, 161, 91, 0.19), transparent 31%),
-    url('/images/meditation-hero.jpg') center 46% / cover no-repeat;
+    url('/images/meditation-hero.webp') center 46% / cover no-repeat;
 }
 
 .hero-section::before,
@@ -854,3 +873,20 @@ footer.bg-navy {
   color: var(--navy-deep);
   background: rgba(196, 161, 91, 0.18);
 }
+
+/* Reserve intrinsic boxes so late-loading SVG logos and icon fonts don't shift layout */
+.site-logo,
+.footer-logo,
+img[alt="NEW AOM"] {
+  aspect-ratio: 440 / 112;
+}
+
+.bi {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  overflow: hidden;
+  vertical-align: -0.125em;
+}
+

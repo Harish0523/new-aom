@@ -28,7 +28,8 @@ export function fetchCmsContent(locale) {
 
 export function resolveMediaUrl(value) {
   if (!value) return '';
-  if (/^(https?:)?\/\//i.test(value) || value.startsWith('/')) return value;
+  if (/^(https?:)?\/\//i.test(value)) return value;
+  if (value.startsWith('/')) return `${import.meta.env.BASE_URL}${value.slice(1)}`;
   if (value.startsWith('uploads/cms/')) {
     return new URL(value, `${API_BASE}/../../`).href;
   }
