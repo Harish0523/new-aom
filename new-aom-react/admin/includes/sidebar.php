@@ -28,6 +28,7 @@ $icon = static function (string $name): string {
         'database' => '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>',
         'logout' => '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
         'menu' => '<line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>',
+        'external' => '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>',
     ];
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' . ($paths[$name] ?? '') . '</svg>';
 };
@@ -57,6 +58,8 @@ if ($isSuper) {
 $navSections = [
     'Main' => [
         ['label' => 'Dashboard', 'href' => 'index.php', 'file' => 'index.php', 'icon' => 'dashboard'],
+        // Public React site: Vite dev server locally (5174 when another Vite app holds 5173), change to the live domain after deploy.
+        ['label' => 'View Website', 'href' => 'http://localhost:5174', 'file' => '', 'icon' => 'external', 'external' => true],
     ],
     'Website Content' => [],
     'Operations' => [
@@ -112,7 +115,7 @@ $e = static fn ($value): string => htmlspecialchars((string) $value, ENT_QUOTES,
         }
         ?>
         <a class="admin-nav-link<?= $isActive ? ' active' : '' ?>"
-           href="<?= $e($item['href']) ?>"<?= $isActive ? ' aria-current="page"' : '' ?>>
+           href="<?= $e($item['href']) ?>"<?= !empty($item['external']) ? ' target="_blank" rel="noopener"' : '' ?><?= $isActive ? ' aria-current="page"' : '' ?>>
           <?= $icon($item['icon']) ?>
           <span><?= $e($item['label']) ?></span>
         </a>
